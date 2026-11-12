@@ -1,0 +1,24 @@
+{
+  "nombre": "Fisioterapia Ejemplo (clínica ficticia de demostración)",
+  "tipo": "clínica de fisioterapia",
+  "direccion": "Calle Ficticia 12, bajo (ciudad de ejemplo)",
+  "como_llegar": "Parada de autobús a 2 minutos. Aparcamiento público en la calle de al lado.",
+  "telefono_recepcion": "000 000 000",
+  "horario": "Lunes a viernes de 9:00 a 14:00 y de 16:00 a 20:30. Sábados y domingos cerrado.",
+  "servicios": [
+    {"nombre": "Primera valoración de fisioterapia (45 min)", "precio": "45 €"},
+    {"nombre": "Sesión de fisioterapia (45 min)", "precio": "40 €"},
+    {"nombre": "Bono 5 sesiones", "precio": "180 €"},
+    {"nombre": "Punción seca (añadido a sesión)", "precio": "10 €"},
+    {"nombre": "Pilates terapéutico en grupo reducido (mensual, 2 días/semana)", "precio": "65 €/mes"}
+  ],
+  "aseguradoras": ["(lista de ejemplo) Mutua A", "Aseguradora B"],
+  "politica_cancelacion": "Se ruega avisar con 24 h de antelación para cancelar o cambiar una cita.",
+  "formas_de_pago": "Tarjeta, Bizum y efectivo.",
+  "preguntas_frecuentes": [
+    {"p": "¿Necesito volante médico?", "r": "No, salvo que vayas por aseguradora y esta lo exija."},
+    {"p": "¿Qué ropa llevo?", "r": "Ropa cómoda. Si es por la rodilla o el tobillo, mejor pantalón corto."},
+    {"p": "¿Hacéis domicilios?", "r": "No de momento."}
+  ],
+  "mensaje_derivacion": "Te paso con recepción: una persona te responderá por aquí en horario de apertura. Si es urgente, llama al 000 000 000 o, en caso de emergencia, al 112."
+}
