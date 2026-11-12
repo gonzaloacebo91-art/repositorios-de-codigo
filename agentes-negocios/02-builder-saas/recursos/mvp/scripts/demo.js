@@ -1,5 +1,5 @@
 'use strict';
-// Crea datos de demostración en ./data (cuenta demo@trimestra.local / demo-trimestra) para enseñar
+// Crea datos de demostración en ./data (cuenta demo@recadoc.local / demo-recadoc) para enseñar
 // el producto en una llamada con una gestoría. No envía nada al exterior.
 const path = require('node:path');
 const { abrir } = require('../lib/db');
@@ -7,13 +7,13 @@ const U = require('../lib/util');
 
 const dataDir = path.resolve(process.env.DATA_DIR || path.join(__dirname, '..', 'data'));
 const db = abrir(dataDir);
-const email = 'demo@trimestra.local';
+const email = 'demo@recadoc.local';
 if (db.prepare('SELECT 1 FROM despachos WHERE email = ?').get(email)) {
-  console.log('La cuenta demo ya existe. Entra con demo@trimestra.local / demo-trimestra');
+  console.log('La cuenta demo ya existe. Entra con demo@recadoc.local / demo-recadoc');
   process.exit(0);
 }
 const despachoId = Number(db.prepare('INSERT INTO despachos (nombre, email, pass_hash) VALUES (?, ?, ?)')
-  .run('Asesoría Demo', email, U.hashPassword('demo-trimestra')).lastInsertRowid);
+  .run('Asesoría Demo', email, U.hashPassword('demo-recadoc')).lastInsertRowid);
 const clientes = [
   ['Bar La Esquina SL', 'esquina@ejemplo.com', '34600000001'],
   ['Fontanería Ruiz', 'ruiz@ejemplo.com', '34600000002'],
@@ -48,5 +48,5 @@ for (const [i, s] of [[0, sols[0]], [1, sols[1]]]) {
   db.prepare("UPDATE solicitudes SET ultima_actividad = datetime('now') WHERE id = ?").run(s.id);
 }
 db.prepare("UPDATE solicitudes SET terminada = 1, terminada_at = datetime('now'), comentario = 'Todo enviado, ¡gracias!' WHERE id = ?").run(sols[0].id);
-console.log('Datos demo creados. Entra en http://localhost:3000 con demo@trimestra.local / demo-trimestra');
+console.log('Datos demo creados. Entra en http://localhost:3000 con demo@recadoc.local / demo-recadoc');
 console.log(`Enlace de cliente de ejemplo: http://localhost:3000/s/${sols[2].token}`);

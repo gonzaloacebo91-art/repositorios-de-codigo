@@ -9,7 +9,7 @@ const { crearApp } = require('../lib/app');
 const U = require('../lib/util');
 
 test('flujo completo: registro, clientes, campaña, subida, recordatorios', async () => {
-  const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'trimestra-test-'));
+  const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'recadoc-test-'));
   const cfg = { baseUrl: 'http://localhost', dataDir, maxUploadBytes: 1024 * 1024, mailMode: 'bandeja' };
   const { server, db, ejecutarRecordatorios } = crearApp(cfg);
   await new Promise((r) => server.listen(0, r));

@@ -4,7 +4,7 @@ const { esc } = require('./util');
 function layout({ titulo, cuerpo, despacho = null, publico = false }) {
   const nav = despacho
     ? `<nav class="top">
-        <a class="marca" href="/panel">Trimestra</a>
+        <a class="marca" href="/panel">Recadoc</a>
         <a href="/panel">Campañas</a>
         <a href="/clientes">Clientes</a>
         <a href="/envios">Emails</a>
@@ -14,7 +14,7 @@ function layout({ titulo, cuerpo, despacho = null, publico = false }) {
       </nav>`
     : publico
       ? ''
-      : `<nav class="top"><a class="marca" href="/">Trimestra</a><span class="espacio"></span>
+      : `<nav class="top"><a class="marca" href="/">Recadoc</a><span class="espacio"></span>
          <a href="/entrar">Entrar</a><a class="btn peq" href="/registro">Probar gratis</a></nav>`;
   return `<!doctype html>
 <html lang="es">
@@ -22,7 +22,7 @@ function layout({ titulo, cuerpo, despacho = null, publico = false }) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>${esc(titulo)} · Trimestra</title>
+<title>${esc(titulo)} · Recadoc</title>
 <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>

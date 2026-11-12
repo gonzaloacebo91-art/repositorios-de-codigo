@@ -19,7 +19,7 @@ if (cfg.mailMode === 'resend' && (!cfg.resendKey || !cfg.mailFrom)) {
 
 const { server, ejecutarRecordatorios } = crearApp(cfg);
 server.listen(puerto, () => {
-  console.log(`Trimestra escuchando en ${cfg.baseUrl} (emails: ${cfg.mailMode === 'resend' ? 'ENVÍO REAL' : 'modo bandeja, no se envían'})`);
+  console.log(`Recadoc escuchando en ${cfg.baseUrl} (emails: ${cfg.mailMode === 'resend' ? 'ENVÍO REAL' : 'modo bandeja, no se envían'})`);
 });
 
 // Revisa recordatorios cada hora (y al arrancar). Cada recordatorio se envía como máximo una vez.

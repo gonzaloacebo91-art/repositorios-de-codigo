@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atiende24 · Recepción por WhatsApp para clínicas</title>
+<meta name="description" content="Asistente de recepción por WhatsApp para clínicas pequeñas: responde al momento, también fuera de horario, y deja las citas anotadas para recepción.">
+<!-- BORRADOR NO PUBLICADO. Publicar requiere autorización (A2). Sustituir [corchetes] antes. -->
+<style>
+:root{--bg:#f7f8f6;--card:#fff;--ink:#17201b;--muted:#5b675f;--brand:#0f7b5f;--brand-2:#e6f3ee;--line:#dfe5e1}
+@media (prefers-color-scheme:dark){:root{--bg:#111613;--card:#18201c;--ink:#e8eee9;--muted:#a3b0a8;--brand:#3fbf95;--brand-2:#1d2e27;--line:#2a3530}}
+*{box-sizing:border-box}body{margin:0;font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{padding:18px 0;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;letter-spacing:-.02em}.logo span{color:var(--brand)}
+.btn{display:inline-block;background:var(--brand);color:#fff;padding:12px 20px;border-radius:10px;text-decoration:none;font-weight:600;border:0;cursor:pointer;font-size:16px}
+.btn.alt{background:transparent;color:var(--brand);border:2px solid var(--brand)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:40px 0 56px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-.02em;margin:0 0 16px}
+.lead{color:var(--muted);font-size:19px;margin:0 0 24px}
+.phone{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.07)}
+.phone .t{font-size:13px;color:var(--muted);text-align:center;margin-bottom:10px}
+.msg{padding:9px 12px;border-radius:12px;margin:8px 0;max-width:85%;font-size:15px}
+.in{background:var(--brand-2)}.out{background:var(--brand);color:#fff;margin-left:auto}
+section{padding:48px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(24px,3.5vw,32px);margin:0 0 20px;letter-spacing:-.01em}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{margin:0 0 8px;font-size:19px}.card p{margin:0;color:var(--muted)}
+.price{font-size:30px;font-weight:800}.price small{font-size:15px;font-weight:500;color:var(--muted)}
+ul.check{padding-left:0;list-style:none}ul.check li{padding-left:26px;position:relative;margin:7px 0}
+ul.check li:before{content:"✓";position:absolute;left:0;color:var(--brand);font-weight:700}
+.note{font-size:14px;color:var(--muted)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:10px 0}
+summary{font-weight:600;cursor:pointer}
+form{display:grid;gap:12px;max-width:520px}
+input,select,textarea{font:inherit;padding:11px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:100%}
+footer{padding:30px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+@media (max-width:820px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">Atiende<span>24</span></div><a class="btn alt" href="#contacto">Pedir demo</a></header>
+
+<div class="hero">
+  <div>
+    <h1>Tu clínica contesta el WhatsApp en menos de un minuto. También a las 22:00.</h1>
+    <p class="lead">Un asistente que responde precios, horarios y dudas frecuentes con la información que tú apruebas, y deja las solicitudes de cita listas para que recepción solo tenga que confirmarlas.</p>
+    <a class="btn" href="#contacto">Ver una demo de 10 minutos</a>
+    <p class="note">Para fisioterapia, dental, podología, psicología, nutrición y estética. Sin permanencia.</p>
+  </div>
+  <div class="phone" aria-label="Ejemplo de conversación (demostración)">
+    <div class="t">Ejemplo de conversación · 21:47</div>
+    <div class="msg in">Hola, ¿cuánto cuesta la primera visita? ¿Tenéis hueco esta semana?</div>
+    <div class="msg out">¡Hola! Soy el asistente virtual (IA) de la clínica. La primera valoración son 45 € y dura 45 min. Si me dices tu nombre y qué día y franja te viene mejor, lo dejo anotado para que recepción te confirme mañana a primera hora.</div>
+    <div class="msg in">Laura, el jueves por la tarde</div>
+    <div class="msg out">Anotado, Laura: primera valoración, jueves por la tarde. Recepción te confirma por aquí a partir de las 9:00. ¿Algo más?</div>
+  </div>
+</div>
+
+<section>
+  <h2>Lo que pasa hoy en muchas clínicas</h2>
+  <div class="grid">
+    <div class="card"><h3>Mensajes que esperan</h3><p>Entran consultas mientras atiendes a un paciente, a mediodía o por la noche, y se responden horas después.</p></div>
+    <div class="card"><h3>Las mismas preguntas</h3><p>Precio, horario, dónde aparcar, si trabajáis con tal mutua. Recepción las contesta una y otra vez.</p></div>
+    <div class="card"><h3>Pacientes que no esperan</h3><p>Quien busca fisio o dentista puede escribir a varias clínicas a la vez. Contestar antes es una ventaja.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Cómo funciona</h2>
+  <div class="grid">
+    <div class="card"><h3>1. Nos cuentas tu clínica</h3><p>Un cuestionario con servicios, precios, horarios y preguntas frecuentes. Es lo único que el asistente podrá decir.</p></div>
+    <div class="card"><h3>2. Lo probamos juntos</h3><p>40 preguntas de prueba antes de activar: ni inventa precios ni da consejos clínicos.</p></div>
+    <div class="card"><h3>3. Recepción confirma</h3><p>Las solicitudes de cita y las derivaciones llegan ordenadas. Cualquier paciente puede escribir PERSONA.</p></div>
+  </div>
+</section>
+
+<section id="precios">
+  <h2>Precios claros</h2>
+  <div class="grid">
+    <div class="card"><h3>Esencial</h3><div class="price">89 €<small>/mes</small></div><p>+ 390 € de alta</p>
+      <ul class="check"><li>Respuestas 24/7 con tu información</li><li>Solicitudes de cita para recepción</li><li>Derivación a una persona</li><li>Informe mensual</li></ul></div>
+    <div class="card"><h3>Completo</h3><div class="price">149 €<small>/mes</small></div><p>+ 690 € de alta</p>
+      <ul class="check"><li>Todo lo del Esencial</li><li>Recordatorios de cita con confirmación</li><li>Petición de reseña tras la visita</li><li>Campaña trimestral de reactivación</li></ul></div>
+    <div class="card"><h3>Lanzamiento</h3><div class="price">195 €<small> de alta</small></div><p>Plan Esencial · solo 3 clínicas</p>
+      <ul class="check"><li>–50 % en el alta</li><li>Garantía de 30 días</li><li>A cambio de un caso de estudio</li></ul></div>
+  </div>
+  <p class="note">Precios sin IVA. Sin permanencia: se cancela con 30 días de aviso.</p>
+</section>
+
+<section>
+  <h2>Preguntas frecuentes</h2>
+  <details><summary>¿Los pacientes saben que es una IA?</summary><p>Sí. El primer mensaje lo dice, como exige el Reglamento Europeo de IA, y siempre pueden pedir hablar con una persona.</p></details>
+  <details><summary>¿Y la protección de datos?</summary><p>Firmamos un contrato de encargado del tratamiento. El asistente no pide datos de salud, no guardamos conversaciones y el servidor está en la UE.</p></details>
+  <details><summary>¿Y si responde algo mal?</summary><p>Solo usa la información que apruebas y deriva a una persona ante cualquier duda. Revisamos cada mes las preguntas que no supo responder.</p></details>
+  <details><summary>¿Tengo que cambiar de número?</summary><p>Lo vemos en la demo: se puede usar un número nuevo solo para el asistente o conectar el actual a la plataforma oficial de WhatsApp Business.</p></details>
+</section>
+
+<section id="contacto">
+  <h2>Pide una demo de 10 minutos</h2>
+  <!-- Formulario sin conectar. Al publicar (A2), conectar a un servicio de formularios y añadir casilla de privacidad. -->
+  <form onsubmit="event.preventDefault();alert('Formulario de demostración: todavía no está conectado.');">
+    <input name="nombre" placeholder="Tu nombre" required>
+    <input name="clinica" placeholder="Nombre de la clínica" required>
+    <select name="tipo"><option>Fisioterapia</option><option>Dental</option><option>Podología</option><option>Psicología</option><option>Nutrición</option><option>Estética</option><option>Otra</option></select>
+    <input name="telefono" type="tel" placeholder="Teléfono" required>
+    <label class="note"><input type="checkbox" required style="width:auto"> He leído la <a href="#">política de privacidad</a> y acepto que me contactéis para la demo.</label>
+    <button class="btn" type="submit">Quiero la demo</button>
+  </form>
+</section>
+
+<footer>Atiende24 · [Nombre del titular] · NIF [__] · [email] · <a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></footer>
+</div>
+</body>
+</html>

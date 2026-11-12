@@ -97,7 +97,7 @@ CREATE INDEX IF NOT EXISTS idx_archivos_sol ON archivos(solicitud_id);
 
 function abrir(dataDir) {
   fs.mkdirSync(dataDir, { recursive: true });
-  const db = new DatabaseSync(path.join(dataDir, 'trimestra.sqlite'));
+  const db = new DatabaseSync(path.join(dataDir, 'recadoc.sqlite'));
   db.exec(ESQUEMA);
   return db;
 }

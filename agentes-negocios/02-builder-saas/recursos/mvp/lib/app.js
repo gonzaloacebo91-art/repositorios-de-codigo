@@ -164,7 +164,7 @@ function crearApp(cfg) {
     enviarHtml(res, layout({
       titulo: 'Inicio',
       cuerpo: `<section class="hero"><h1>Deja de perseguir a tus clientes por las facturas</h1>
-        <p>Trimestra pide la documentación del trimestre a cada cliente con un enlace personal, le recuerda la fecha límite automáticamente y te enseña en una sola pantalla quién ha enviado qué.</p>
+        <p>Recadoc pide la documentación del trimestre a cada cliente con un enlace personal, le recuerda la fecha límite automáticamente y te enseña en una sola pantalla quién ha enviado qué.</p>
         <p><a class="btn" href="/registro">Crear cuenta de prueba</a> <a class="btn sec" href="/entrar">Entrar</a></p></section>`,
     }));
   }
