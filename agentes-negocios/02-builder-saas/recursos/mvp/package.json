@@ -1,0 +1,14 @@
+{
+  "name": "recadoc",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Recogida de documentación recadocl para gestorías: enlace por cliente, recordatorios automáticos y panel de estado.",
+  "main": "server.js",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "demo": "node --disable-warning=ExperimentalWarning scripts/demo.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js"
+  },
+  "license": "UNLICENSED"
+}
