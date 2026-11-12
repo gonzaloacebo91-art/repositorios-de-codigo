@@ -1,0 +1,17 @@
+{
+  "name": "tarot-arcana",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Demo de app de tarot Rider-Waite con tiradas gratuitas, tiradas de pago y contacto con tarotista por WhatsApp",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0"
+  }
+}

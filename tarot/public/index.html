@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arcana · Tarot Rider-Waite</title>
+  <meta name="description" content="Tiradas de tarot Rider-Waite: 5 tiradas gratuitas al día, lecturas completas de 9 cartas y consulta con tarotista por WhatsApp.">
+  <link rel="icon" href="/reverso.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <div class="estrellas" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="logo" href="/" aria-label="Arcana, inicio">✦ Arcana</a>
+    <div class="contadores">
+      <span class="chip" id="chip-gratis" title="Tiradas gratuitas que te quedan hoy">Gratis hoy: <b>–</b></span>
+      <span class="chip chip-oro" id="chip-creditos" title="Tiradas completas pagadas pendientes de usar">Completas: <b>0</b></span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ INICIO ============ -->
+    <section id="v-inicio" class="vista activa">
+      <div class="hero">
+        <h1>Lo que las cartas<br><em>quieren decirte</em></h1>
+        <p class="sub">Tarot Rider-Waite original. Elige tus cartas con calma y recibe tu lectura al momento.</p>
+      </div>
+
+      <div class="opciones">
+        <article class="opcion" data-ir="gratis">
+          <div class="opcion-cartas"><img src="/cartas/m17.jpg" alt=""><img src="/cartas/m19.jpg" alt=""><img src="/cartas/m21.jpg" alt=""></div>
+          <h2>Tirada gratuita</h2>
+          <p>3 cartas con lectura breve de nuestro agente de consultas.</p>
+          <p class="precio">Gratis · <span id="txt-gratis">5 al día</span></p>
+          <button class="btn">Empezar</button>
+        </article>
+
+        <article class="opcion destacada" data-ir="completa">
+          <span class="cinta">Más completa</span>
+          <div class="opcion-cartas nueve">
+            <img src="/cartas/m02.jpg" alt=""><img src="/cartas/c02.jpg" alt=""><img src="/cartas/m10.jpg" alt="">
+          </div>
+          <h2>Tirada completa</h2>
+          <p>9 cartas con una lectura profunda: posiciones, relaciones entre cartas y consejos concretos.</p>
+          <p class="precio"><span id="txt-precio">1 €</span> · tarjeta o Bizum</p>
+          <button class="btn btn-oro">Elegir tirada</button>
+        </article>
+
+        <article class="opcion" data-ir="whatsapp">
+          <div class="opcion-cartas"><img src="/cartas/c13.jpg" alt=""><img src="/cartas/m03.jpg" alt=""><img src="/cartas/p13.jpg" alt=""></div>
+          <h2>Tarotista experta</h2>
+          <p>Habla por WhatsApp con <span class="txt-tarotista">nuestra tarotista</span> para una tirada personalizada.</p>
+          <p class="precio" id="txt-precios-tarotista"></p>
+          <button class="btn btn-wa">Contactar por WhatsApp</button>
+        </article>
+      </div>
+
+      <p class="aviso">Servicio para mayores de 18 años. El tarot es una herramienta de reflexión y entretenimiento: no sustituye el consejo médico, legal, psicológico ni financiero.</p>
+    </section>
+
+    <!-- ============ CONFIGURAR ============ -->
+    <section id="v-configurar" class="vista">
+      <button class="volver" data-volver>← Volver</button>
+      <h1 id="cfg-titulo">Elige tu tirada</h1>
+      <div class="tiradas" id="lista-tiradas"></div>
+
+      <label class="etiqueta" for="pregunta">Tu pregunta <span class="opcional">(opcional)</span></label>
+      <textarea id="pregunta" maxlength="500" rows="3" placeholder="Ej.: ¿Qué necesito saber sobre mi situación laboral este año?"></textarea>
+      <p class="ayuda">Concéntrate en tu pregunta mientras barajamos. Si la dejas en blanco haremos una lectura general.</p>
+
+      <div class="acciones">
+        <button class="btn btn-oro" id="btn-barajar">Barajar las cartas</button>
+      </div>
+      <p class="error" id="cfg-error" role="alert"></p>
+    </section>
+
+    <!-- ============ ELEGIR ============ -->
+    <section id="v-elegir" class="vista">
+      <h1>Elige <span id="elegir-n">3</span> cartas</h1>
+      <p class="sub">Déjate llevar por la intuición. <span id="elegir-cuenta">0</span> de <span id="elegir-total">3</span> elegidas.</p>
+      <div class="mazo" id="mazo" aria-label="Baraja boca abajo"></div>
+      <div class="barra-fija">
+        <div class="ranuras" id="ranuras"></div>
+        <button class="btn btn-oro" id="btn-revelar" disabled>Revelar cartas</button>
+      </div>
+    </section>
+
+    <!-- ============ LECTURA ============ -->
+    <section id="v-lectura" class="vista">
+      <h1 id="lec-titulo">Tu lectura</h1>
+      <p class="sub" id="lec-pregunta"></p>
+      <div class="tablero" id="tablero"></div>
+      <div class="lectura">
+        <div class="lectura-cabecera">
+          <span class="agente" id="lec-agente">Agente de consultas</span>
+        </div>
+        <div class="lectura-texto" id="lec-texto" aria-live="polite"></div>
+        <div class="escribiendo" id="lec-escribiendo"><span></span><span></span><span></span></div>
+      </div>
+      <div class="acciones">
+        <button class="btn" id="btn-repetir" hidden>Repetir lectura</button>
+        <button class="btn" data-ir="inicio">Nueva tirada</button>
+        <button class="btn btn-oro" id="btn-mejorar" hidden>Tirada completa de 9 cartas</button>
+        <a class="btn btn-wa" id="btn-wa-lectura" target="_blank" rel="noopener">Profundizar con la tarotista</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ MODAL DE PAGO ============ -->
+  <dialog id="modal-pago" class="modal">
+    <form method="dialog" class="modal-cuerpo">
+      <h2>Tirada completa · <span id="pago-precio">1 €</span></h2>
+      <p>Pago único y seguro. Después elegirás tus 9 cartas.</p>
+      <div class="metodos" id="metodos-pago"></div>
+      <p class="error" id="pago-error" role="alert"></p>
+      <button class="enlace" value="cancelar">Cancelar</button>
+    </form>
+  </dialog>
+
+  <!-- ============ MODAL CARTA AMPLIADA ============ -->
+  <dialog id="modal-carta" class="modal modal-carta">
+    <form method="dialog">
+      <img id="carta-grande" alt="">
+      <p id="carta-grande-nombre"></p>
+      <button class="enlace">Cerrar</button>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <footer class="pie">
+    Imágenes: baraja Rider-Waite-Smith original (1909, ilustraciones de Pamela Colman Smith). · Demo
+  </footer>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
