@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hucha Fiscal 2027</title>
+<meta name="description" content="Plantilla de Google Sheets y Excel para autónomos: borrador del 303 y del 130 y cuánto apartar para Hacienda cada trimestre. Pago único.">
+<!-- BORRADOR: no desplegar sin la autorización A5. Sustituir URL_TIENDA y el formulario (A6). -->
+<style>
+:root{--bg:#fbfaf7;--fg:#1d2321;--muted:#5b6662;--brand:#1f6f5c;--brand-2:#e3f1ec;--card:#ffffff;--line:#e2e2dc;--warn:#fff4cc}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121615;--fg:#e8ece9;--muted:#a3ada9;--brand:#5cc3a6;--brand-2:#1c2b27;--card:#1a1f1e;--line:#2c3431;--warn:#3a3420}}
+:root[data-theme="dark"]{--bg:#121615;--fg:#e8ece9;--muted:#a3ada9;--brand:#5cc3a6;--brand-2:#1c2b27;--card:#1a1f1e;--line:#2c3431;--warn:#3a3420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{padding:56px 0 32px}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 16px}
+h2{font-size:clamp(22px,3.5vw,30px);margin:48px 0 16px}
+p.lead{font-size:19px;color:var(--muted);max-width:640px}
+.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:14px 22px;border-radius:10px;font-weight:600;border:0;cursor:pointer;font-size:16px}
+:root[data-theme="dark"] .btn{color:#0d1412}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#0d1412}}
+.price{margin-left:12px;color:var(--muted)}
+.price s{opacity:.7}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.calc label{display:block;font-size:14px;color:var(--muted);margin:12px 0 4px}
+.calc input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font-size:16px}
+.result{background:var(--brand-2);border-radius:12px;padding:20px}
+.big{font-size:34px;font-weight:700;color:var(--brand)}
+.small{font-size:13px;color:var(--muted)}
+.note{background:var(--warn);border-radius:8px;padding:12px 14px;font-size:14px}
+ul.check{padding-left:0;list-style:none}
+ul.check li{padding-left:28px;position:relative;margin:8px 0}
+ul.check li:before{content:"✓";position:absolute;left:0;color:var(--brand);font-weight:700}
+footer{margin:64px 0 32px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left}
+form.lead input[type=email]{width:100%;max-width:360px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="small">Para autónomos en España · Google Sheets y Excel</p>
+  <h1>¿Cuánto de lo que cobras es tuyo… y cuánto es de Hacienda?</h1>
+  <p class="lead">Hucha Fiscal es una plantilla para apuntar facturas y gastos en 10 minutos al mes. Calcula el borrador del 303 (IVA) y del 130 (IRPF) y te dice <strong>cuánto apartar cada trimestre</strong> para no llevarte sustos.</p>
+  <p><a class="btn" href="URL_TIENDA">Quiero mi Hucha Fiscal</a><span class="price"><s>29 €</s> <strong>19 €</strong> hasta el 31 de enero · pago único</span></p>
+</header>
+
+<section class="card calc" aria-labelledby="calc-t">
+  <h2 id="calc-t" style="margin-top:0">Calculadora rápida: ¿cuánto debería apartar al mes?</h2>
+  <div class="grid">
+    <div>
+      <label for="ing">Facturación media al mes (sin IVA)</label>
+      <input id="ing" type="number" min="0" step="50" value="2000" inputmode="decimal">
+      <label for="gas">Gastos de la actividad al mes (sin IVA, con factura)</label>
+      <input id="gas" type="number" min="0" step="10" value="200" inputmode="decimal">
+      <label for="cuota">Cuota de autónomo al mes</label>
+      <input id="cuota" type="number" min="0" step="1" value="80" inputmode="decimal">
+      <label for="ret">¿Qué parte de tu facturación lleva retención del 15 %? (%)</label>
+      <input id="ret" type="number" min="0" max="100" step="5" value="0" inputmode="decimal">
+    </div>
+    <div class="result" aria-live="polite">
+      <div class="small">Aparta cada mes aproximadamente</div>
+      <div class="big" id="out">–</div>
+      <table>
+        <tr><td>IVA a ingresar</td><td id="o-iva"></td></tr>
+        <tr><td>Pago a cuenta IRPF (130)</td><td id="o-irpf"></td></tr>
+        <tr><td>Colchón Renta (5 %)</td><td id="o-col"></td></tr>
+        <tr><th>Tu sueldo real</th><th id="o-sueldo"></th></tr>
+      </table>
+      <p class="small">Estimación simplificada: IVA del 21 % en ingresos y gastos, sin el 5 % de difícil justificación. La plantilla lo calcula factura a factura.</p>
+    </div>
+  </div>
+</section>
+
+<h2>Qué incluye</h2>
+<ul class="check">
+  <li>Borrador trimestral del <strong>modelo 303</strong> (IVA), con compensación de trimestres negativos.</li>
+  <li>Borrador del <strong>modelo 130</strong> (IRPF), acumulado y con retenciones y pagos anteriores descontados.</li>
+  <li>La cifra <strong>HUCHA</strong> (IVA + 130 + colchón para la Renta) y tu <strong>sueldo real</strong>.</li>
+  <li>Cuota de autónomo, 5 % de difícil justificación y % de uso del móvil o de la casa ya incluidos.</li>
+  <li>Panel con gráfico mensual y facturas pendientes de cobro.</li>
+  <li>Calendario fiscal 2027 (incluido VERI*FACTU) y guía en PDF en lenguaje claro.</li>
+  <li>Archivo de ejemplo con datos ficticios para aprender en 5 minutos.</li>
+</ul>
+
+<h2>¿Es para mí?</h2>
+<div class="grid">
+  <div class="card"><strong>Sí, si…</strong><p>eres autónomo persona física en estimación directa (freelance, profesional, creador, terapeuta…) y quieres entender tus números sin pagar cada mes un software.</p></div>
+  <div class="card"><strong>No, si…</strong><p>tienes una sociedad, estás en módulos o en recargo de equivalencia, o tributas con IGIC o IPSI. Tampoco sirve para emitir facturas.</p></div>
+</div>
+
+<h2>Regalo: calendario fiscal 2027</h2>
+<p>Todos los plazos del año en una página y un recordatorio por email antes de cada trimestre.</p>
+<!-- Sustituir por el formulario incrustado de MailerLite tras A6. No envía nada. -->
+<form class="lead" onsubmit="event.preventDefault();alert('Formulario de demostración: aún no está conectado.');">
+  <label for="em" class="small">Tu email</label><br>
+  <input id="em" type="email" required placeholder="tu@email.com" style="padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font-size:16px"><br>
+  <label class="small"><input type="checkbox" required> Acepto la <a href="#privacidad">política de privacidad</a> y recibir el calendario y emails sobre Hucha Fiscal (puedo darme de baja cuando quiera).</label><br><br>
+  <button class="btn" type="submit">Quiero el calendario gratis</button>
+</form>
+
+<h2>Preguntas frecuentes</h2>
+<p><strong>¿Sustituye a mi gestor?</strong> No. Es una herramienta de organización y estimación que te ayuda a entender tus números y a llegar a la gestoría con todo ordenado.</p>
+<p><strong>¿Necesito saber Excel?</strong> No. Solo rellenas las celdas amarillas.</p>
+<p><strong>¿Cómo la recibo?</strong> Descarga inmediata tras el pago. Funciona en Google Sheets (gratis) y en Excel.</p>
+
+<p class="note">Hucha Fiscal no presenta impuestos ni sustituye el asesoramiento profesional. Normativa de referencia: noviembre de 2026. Revisa siempre los importes antes de presentar tus modelos.</p>
+
+<footer id="privacidad">
+  <p>[Titular: NOMBRE · NIF · email de contacto. Completar tras A2/A6.] · <a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Condiciones de venta</a></p>
+</footer>
+</div>
+<script>
+(function(){
+  var f=function(n){return n.toLocaleString('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0});};
+  var ids=['ing','gas','cuota','ret'];
+  function v(id){var x=parseFloat(document.getElementById(id).value);return isFinite(x)&&x>0?x:0;}
+  function calc(){
+    var ing=v('ing'),gas=v('gas'),cuota=v('cuota'),ret=Math.min(v('ret'),100)/100;
+    var iva=Math.max(0,ing*0.21-gas*0.21);
+    var rend=Math.max(0,ing-gas-cuota);
+    var irpf=Math.max(0,rend*0.20-ing*ret*0.15);
+    var col=rend*0.05;
+    var total=iva+irpf+col;
+    document.getElementById('out').textContent=f(total);
+    document.getElementById('o-iva').textContent=f(iva);
+    document.getElementById('o-irpf').textContent=f(irpf);
+    document.getElementById('o-col').textContent=f(col);
+    document.getElementById('o-sueldo').textContent=f(rend-irpf-col);
+  }
+  ids.forEach(function(id){document.getElementById(id).addEventListener('input',calc);});
+  calc();
+})();
+</script>
+</body>
+</html>

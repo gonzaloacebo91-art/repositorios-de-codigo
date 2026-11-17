@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recadoc — Deja de perseguir a tus clientes por las facturas</title>
+<meta name="description" content="Recadoc pide la documentación del trimestre a cada cliente de tu gestoría con un enlace personal, le recuerda la fecha límite y te muestra quién ha enviado qué.">
+<style>
+  :root { --fondo:#f7f7f5; --papel:#fff; --tinta:#1d2330; --suave:#5f6878; --linea:#e4e4df; --acento:#1f6f5c; --acento-claro:#e3f1ec; }
+  @media (prefers-color-scheme: dark) { :root { --fondo:#14171c; --papel:#1c2027; --tinta:#e8eaed; --suave:#9aa3b2; --linea:#2c313a; --acento:#4fbf9f; --acento-claro:#1f3b33; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--fondo); color:var(--tinta); font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  .ancho { max-width:1040px; margin:0 auto; padding:0 16px; }
+  header.top { display:flex; justify-content:space-between; align-items:center; padding:16px 0; }
+  .marca { font-weight:800; color:var(--acento); font-size:1.2rem; text-decoration:none; }
+  .btn { display:inline-block; background:var(--acento); color:#fff; padding:12px 20px; border-radius:10px; font-weight:700; text-decoration:none; }
+  .btn.sec { background:transparent; color:var(--acento); border:1.5px solid var(--acento); }
+  .hero { padding:56px 0 40px; display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center; }
+  .hero h1 { font-size:2.6rem; line-height:1.15; margin:0 0 16px; letter-spacing:-.02em; }
+  .hero p { color:var(--suave); font-size:1.15rem; }
+  .maqueta { background:var(--papel); border:1px solid var(--linea); border-radius:16px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,.06); font-size:.92rem; }
+  .fila { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--linea); }
+  .fila:last-child { border:0; }
+  .chip { padding:1px 10px; border-radius:99px; font-size:.82rem; background:var(--linea); }
+  .chip.ok { background:var(--acento-claro); color:var(--acento); }
+  .chip.medio { background:#fff2cc; color:#7a5b00; }
+  section { padding:48px 0; }
+  h2 { font-size:1.8rem; margin:0 0 20px; letter-spacing:-.01em; }
+  .tres { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .tarjeta { background:var(--papel); border:1px solid var(--linea); border-radius:14px; padding:22px; }
+  .tarjeta h3 { margin:0 0 8px; font-size:1.1rem; }
+  .tarjeta p { margin:0; color:var(--suave); }
+  .precio { font-size:2rem; font-weight:800; }
+  .precio small { font-size:1rem; font-weight:500; color:var(--suave); }
+  .destacado { border:2px solid var(--acento); }
+  ul.lista { padding-left:20px; color:var(--suave); }
+  details { background:var(--papel); border:1px solid var(--linea); border-radius:12px; padding:14px 18px; margin:10px 0; }
+  summary { font-weight:600; cursor:pointer; }
+  footer { padding:32px 0 48px; color:var(--suave); font-size:.9rem; border-top:1px solid var(--linea); }
+  @media (max-width:820px) { .hero, .tres { grid-template-columns:1fr; } .hero h1 { font-size:2rem; } }
+</style>
+</head>
+<body>
+<div class="ancho">
+  <header class="top"><a class="marca" href="#">Recadoc</a><a class="btn sec" href="#precios">Precios</a></header>
+
+  <div class="hero">
+    <div>
+      <h1>Deja de perseguir a tus clientes por las facturas</h1>
+      <p>Recadoc pide la documentación del trimestre a cada cliente con un enlace personal, le recuerda la fecha límite por ti y te enseña en una sola pantalla quién ha enviado qué.</p>
+      <p><a class="btn" href="mailto:hola@DOMINIO?subject=Quiero%20probar%20Recadoc">Quiero ser despacho fundador</a></p>
+      <p style="font-size:.95rem">Sin migraciones: funciona junto a tu programa de contabilidad. Tus clientes no necesitan usuario ni contraseña.</p>
+    </div>
+    <div class="maqueta" aria-label="Ejemplo del panel">
+      <strong>4T 2026</strong> · fecha límite 15/01 <span style="float:right" class="chip">faltan 6 días</span>
+      <div style="margin:12px 0 4px;color:var(--suave)">12 completas · 9 en curso · 17 sin empezar</div>
+      <div class="fila"><span>Bar La Esquina SL</span><span class="chip ok">Completa</span></div>
+      <div class="fila"><span>Fontanería Ruiz</span><span class="chip medio">2 de 4</span></div>
+      <div class="fila"><span>Laura Gómez</span><span class="chip">Recordatorio enviado</span></div>
+      <div class="fila"><span>Taller Hermanos Díaz SL</span><span class="chip ok">Completa</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Cómo funciona</h2>
+    <div class="tres">
+      <div class="tarjeta"><h3>1. Creas la campaña</h3><p>«4T 2026», fecha límite y qué pides: facturas emitidas, recibidas, extractos, tickets… Pegas tu lista de clientes desde Excel.</p></div>
+      <div class="tarjeta"><h3>2. Cada cliente recibe su enlace</h3><p>Por email o por WhatsApp. Sube fotos y PDF desde el móvil, marca «no tengo» lo que no aplica y pulsa «He terminado».</p></div>
+      <div class="tarjeta"><h3>3. Recadoc insiste por ti</h3><p>Recordatorios 7, 3 y 1 día antes, solo a quien le falta algo. Tú ves el estado de todos y descargas lo recibido.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Por qué no un portal completo</h2>
+    <ul class="lista">
+      <li>Las suites para despachos cuestan cientos de euros al año por usuario y exigen cambiar de forma de trabajar. Recadoc hace una sola cosa y empieza a funcionar en 10 minutos.</li>
+      <li>Tus clientes no instalan nada ni recuerdan contraseñas: abren el enlace y suben.</li>
+      <li>Datos alojados en la UE, enlaces privados por cliente y contrato de encargado del tratamiento incluido.</li>
+    </ul>
+  </section>
+
+  <section id="precios">
+    <h2>Precios (sin IVA)</h2>
+    <div class="tres">
+      <div class="tarjeta"><h3>Básico</h3><div class="precio">19 €<small>/mes</small></div><p>Hasta 40 clientes · recordatorios automáticos · WhatsApp · exportación CSV</p></div>
+      <div class="tarjeta destacado"><h3>Despacho</h3><div class="precio">39 €<small>/mes</small></div><p>Hasta 150 clientes · todo lo del Básico · 3 usuarios · soporte prioritario</p></div>
+      <div class="tarjeta"><h3>Pro</h3><div class="precio">69 €<small>/mes</small></div><p>Hasta 400 clientes · logo y remitente del despacho · usuarios ilimitados</p></div>
+    </div>
+    <p style="color:var(--suave)">Pago anual: 2 meses gratis. <strong>Despachos fundadores (plazas limitadas):</strong> primer trimestre gratis y 40 % de descuento durante el primer año a cambio de 20 minutos de opinión al mes.</p>
+  </section>
+
+  <section>
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Sustituye a mi programa de contabilidad?</summary><p>No. Recadoc solo recoge y ordena la documentación; tú la sigues contabilizando con tu herramienta habitual.</p></details>
+    <details><summary>¿Dónde se guardan los documentos?</summary><p>En servidores dentro de la Unión Europea, con copias de seguridad diarias. Firmamos contigo el contrato de encargado del tratamiento (art. 28 RGPD).</p></details>
+    <details><summary>¿Y si mi cliente no tiene email?</summary><p>Copias su enlace o pulsas «WhatsApp» y se abre el mensaje ya escrito en tu móvil o WhatsApp Web.</p></details>
+    <details><summary>¿Hay permanencia?</summary><p>No. Puedes cancelar cuando quieras y descargar todo lo recibido.</p></details>
+  </section>
+
+  <footer>Recadoc · <a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Condiciones</a></footer>
+</div>
+</body>
+</html>

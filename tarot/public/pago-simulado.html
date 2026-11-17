@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pago de prueba · Arcana</title>
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #eef0f4; font: 16px/1.5 system-ui, sans-serif; color: #1c2230; padding: 16px; }
+    .caja { background: #fff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,.08); padding: 26px; width: 100%; max-width: 380px; }
+    .demo { background: #fff4d6; color: #7a5600; font-size: .8rem; padding: 8px 10px; border-radius: 8px; margin-bottom: 16px; }
+    h1 { font-size: 1.1rem; margin: 0 0 4px; }
+    .importe { font-size: 2rem; font-weight: 700; margin: 6px 0 16px; }
+    label { display: block; font-size: .8rem; color: #5b6475; margin: 10px 0 4px; }
+    input { width: 100%; box-sizing: border-box; padding: 11px; border: 1px solid #cfd5df; border-radius: 8px; font: inherit; }
+    .fila { display: flex; gap: 10px; }
+    button { width: 100%; padding: 13px; border: 0; border-radius: 10px; font: 600 1rem system-ui; cursor: pointer; margin-top: 16px; }
+    .pagar { background: #1c2230; color: #fff; }
+    .pagar.bizum { background: #05c3dd; color: #032b33; }
+    .cancelar { background: none; color: #5b6475; text-decoration: underline; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <div class="caja">
+    <div class="demo">Pasarela SIMULADA de la demo: no se cobra nada. En producción aquí aparece Redsys (tarjeta/Bizum) o Stripe.</div>
+    <h1>Arcana · Tirada completa de tarot</h1>
+    <div class="importe" id="importe">1,00 €</div>
+    <div id="campos"></div>
+    <button class="pagar" id="pagar">Pagar</button>
+    <button class="cancelar" id="cancelar">Cancelar y volver</button>
+  </div>
+  <script type="module">
+    const p = new URLSearchParams(location.search);
+    const pedido = p.get('pedido');
+    const metodo = p.get('metodo');
+    const estado = await fetch('/api/estado').then((r) => r.json());
+    document.getElementById('importe').textContent = estado.precioCompleta.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+    const campos = document.getElementById('campos');
+    const boton = document.getElementById('pagar');
+    if (metodo === 'bizum') {
+      campos.innerHTML = '<label>Teléfono Bizum</label><input inputmode="tel" value="600 000 000">';
+      boton.textContent = 'Pagar con Bizum';
+      boton.classList.add('bizum');
+    } else {
+      campos.innerHTML = `<label>Número de tarjeta</label><input value="4548 8100 0000 0003">
+        <div class="fila"><div><label>Caducidad</label><input value="12/34"></div><div><label>CVV</label><input value="123"></div></div>`;
+      boton.textContent = 'Pagar con tarjeta';
+    }
+    const confirmar = async (resultado) => {
+      await fetch('/api/pago-simulado/confirmar', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pedido, resultado }) });
+      location.href = `/?pago=${resultado}&pedido=${encodeURIComponent(pedido)}`;
+    };
+    boton.onclick = () => { boton.disabled = true; boton.textContent = 'Procesando…'; setTimeout(() => confirmar('ok'), 900); };
+    document.getElementById('cancelar').onclick = () => confirmar('ko');
+  </script>
+</body>
+</html>
