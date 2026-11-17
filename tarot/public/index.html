@@ -50,12 +50,12 @@
           <button class="btn btn-oro">Elegir tirada</button>
         </article>
 
-        <article class="opcion" data-ir="whatsapp">
+        <article class="opcion">
           <div class="opcion-cartas"><img src="/cartas/c13.jpg" alt=""><img src="/cartas/m03.jpg" alt=""><img src="/cartas/p13.jpg" alt=""></div>
           <h2>Tarotista experta</h2>
           <p>Habla por WhatsApp con <span class="txt-tarotista">nuestra tarotista</span> para una tirada personalizada.</p>
           <p class="precio" id="txt-precios-tarotista"></p>
-          <button class="btn btn-wa">Contactar por WhatsApp</button>
+          <a class="btn btn-wa" id="btn-wa-inicio" target="_blank" rel="noopener">Contactar por WhatsApp</a>
         </article>
       </div>
 
@@ -118,6 +118,17 @@
       <div class="metodos" id="metodos-pago"></div>
       <p class="error" id="pago-error" role="alert"></p>
       <button class="enlace" value="cancelar">Cancelar</button>
+    </form>
+  </dialog>
+
+  <!-- ============ PASARELA SIMULADA (demo sin servidor) ============ -->
+  <dialog id="modal-pasarela" class="modal">
+    <form class="modal-cuerpo" id="form-pasarela">
+      <p class="demo-aviso">Pasarela SIMULADA: no se cobra nada.</p>
+      <h2 id="pasarela-titulo">Pagar 1,00 €</h2>
+      <div id="pasarela-campos" class="campos"></div>
+      <button class="btn btn-oro" id="pasarela-pagar" type="submit">Pagar</button>
+      <button class="enlace" id="pasarela-cancelar" type="button">Cancelar</button>
     </form>
   </dialog>
 

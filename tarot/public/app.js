@@ -74,6 +74,7 @@ function pintarEstado(s) {
   $('#pago-precio').textContent = precio;
   $$('.txt-tarotista').forEach((e) => (e.textContent = s.whatsapp.nombre));
   $('#txt-precios-tarotista').textContent = s.whatsapp.horario;
+  $('#btn-wa-inicio').href = s.whatsapp.url;
 }
 
 async function cargarEstado() {
@@ -85,10 +86,6 @@ $$('[data-ir]').forEach((el) =>
   el.addEventListener('click', (e) => {
     const destino = el.dataset.ir;
     if (destino === 'inicio') return ir('inicio');
-    if (destino === 'whatsapp') {
-      e.stopPropagation();
-      return window.open(estado.servidor.whatsapp.url, '_blank', 'noopener');
-    }
     abrirConfiguracion(destino);
   }),
 );
@@ -172,6 +169,10 @@ async function pagar(metodo) {
     guardarSesion('arcana-pendiente', { tirada: estado.tirada, pregunta: $('#pregunta').value });
     const r = await api('/api/pedido', { method: 'POST', body: { metodo } });
     guardarSesion('arcana-pedido', r.pedido);
+    if (r.accion === 'simulado') {
+      $('#modal-pago').close();
+      return abrirPasarela(r.pedido, metodo);
+    }
     if (r.accion === 'redirigir') return (location.href = r.url);
     if (r.accion === 'formulario') {
       const f = document.createElement('form');
@@ -192,6 +193,48 @@ async function pagar(metodo) {
   }
 }
 
+// Pasarela simulada dentro de la página (versión de demostración sin servidor)
+function abrirPasarela(pedido, metodo) {
+  const precio = $('#txt-precio').textContent;
+  $('#pasarela-titulo').textContent = `Pagar ${precio} con ${metodo === 'bizum' ? 'Bizum' : 'tarjeta'}`;
+  $('#pasarela-campos').innerHTML =
+    metodo === 'bizum'
+      ? '<label for="pas-tel">Teléfono Bizum</label><input id="pas-tel" inputmode="tel" value="600 000 000">'
+      : `<label for="pas-tarjeta">Número de tarjeta</label><input id="pas-tarjeta" inputmode="numeric" value="4548 8100 0000 0003">
+         <div class="fila"><div><label for="pas-cad">Caducidad</label><input id="pas-cad" value="12/34"></div>
+         <div><label for="pas-cvv">CVV</label><input id="pas-cvv" inputmode="numeric" value="123"></div></div>`;
+  const boton = $('#pasarela-pagar');
+  boton.disabled = false;
+  boton.textContent = `Pagar ${precio}`;
+  boton.classList.toggle('btn-bizum', metodo === 'bizum');
+  $('#form-pasarela').onsubmit = async (e) => {
+    e.preventDefault();
+    boton.disabled = true;
+    boton.textContent = 'Procesando…';
+    await new Promise((r) => setTimeout(r, 900));
+    await api('/api/pago-simulado/confirmar', { method: 'POST', body: { pedido, resultado: 'ok' } });
+    $('#modal-pasarela').close();
+    await pagoConfirmado(pedido);
+  };
+  $('#pasarela-cancelar').onclick = async () => {
+    await api('/api/pago-simulado/confirmar', { method: 'POST', body: { pedido, resultado: 'ko' } });
+    $('#modal-pasarela').close();
+    toast('Pago cancelado. No se te ha cobrado nada.');
+  };
+  $('#modal-pasarela').showModal();
+}
+
+async function pagoConfirmado(pedido, extra = '') {
+  const r = await api(`/api/pedido?id=${encodeURIComponent(pedido)}${extra}`).catch(() => null);
+  if (r?.estado !== 'pagado') return false;
+  pintarEstado(r);
+  toast('¡Pago recibido! Ya puedes hacer tu tirada completa.');
+  const pendiente = leerSesion('arcana-pendiente');
+  guardarSesion('arcana-pendiente', null);
+  abrirConfiguracion('completa', pendiente || undefined);
+  return true;
+}
+
 async function volverDePago() {
   const p = new URLSearchParams(location.search);
   const resultado = p.get('pago');
@@ -207,14 +250,7 @@ async function volverDePago() {
   // La confirmación del banco puede tardar unos segundos: consultamos varias veces.
   const extra = p.get('stripe_sesion') ? `&stripe_sesion=${encodeURIComponent(p.get('stripe_sesion'))}` : '';
   for (let intento = 0; intento < 10; intento++) {
-    const r = await api(`/api/pedido?id=${encodeURIComponent(pedido)}${extra}`).catch(() => null);
-    if (r?.estado === 'pagado') {
-      pintarEstado(r);
-      toast('¡Pago recibido! Ya puedes hacer tu tirada completa.');
-      guardarSesion('arcana-pendiente', null);
-      abrirConfiguracion('completa', pendiente || undefined);
-      return true;
-    }
+    if (await pagoConfirmado(pedido, extra)) return true;
     await new Promise((res) => setTimeout(res, 1500));
   }
   toast('Estamos esperando la confirmación del pago. Recarga en unos segundos.');

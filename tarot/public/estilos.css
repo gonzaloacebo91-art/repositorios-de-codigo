@@ -44,7 +44,7 @@ h1 em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weigh
 /* ---------- cabecera ---------- */
 .cabecera {
   display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
-  padding: 14px 16px; max-width: 1100px; margin: 0 auto;
+  padding-block: 14px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); max-width: 1100px; margin: 0 auto;
 }
 .logo { font-family: Cinzel, serif; font-size: 1.35rem; color: var(--oro-claro); text-decoration: none; letter-spacing: .08em; }
 .contadores { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -53,7 +53,7 @@ h1 em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weigh
 .chip-oro { border-color: var(--oro); }
 .chip[hidden] { display: none; }
 
-main { max-width: 1100px; margin: 0 auto; padding: 8px 16px 48px; }
+main { max-width: 1100px; margin: 0 auto; padding-block: 8px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .vista { display: none; animation: aparecer .4s ease; }
 .vista.activa { display: block; }
 @keyframes aparecer { from { opacity: 0; transform: translateY(8px); } }
@@ -130,7 +130,7 @@ textarea:focus { outline: 2px solid var(--oro); outline-offset: 1px; }
 
 .barra-fija {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: flex; gap: 14px; align-items: center; justify-content: center; flex-wrap: wrap;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(13,8,25,.92); border-top: 1px solid var(--borde); backdrop-filter: blur(8px);
+  padding-block: 12px calc(12px + env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); background: rgba(13,8,25,.92); border-top: 1px solid var(--borde); backdrop-filter: blur(8px);
 }
 #v-elegir:not(.activa) ~ .barra-fija { display: none; }
 .ranuras { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
@@ -171,7 +171,7 @@ figcaption i { color: var(--texto-suave); font-size: .72rem; }
 
 /* ---------- modales ---------- */
 .modal { border: 1px solid var(--borde); border-radius: var(--radio); background: var(--fondo-2); color: var(--texto); padding: 0; max-width: min(420px, calc(100vw - 32px)); width: 100%; }
-.modal::backdrop { background: rgba(5,2,12,.7); backdrop-filter: blur(3px); }
+.modal::backdrop { background: rgba(5,2,12,.82); }
 .modal-cuerpo { padding: 24px; text-align: center; }
 .modal-cuerpo p { color: var(--texto-suave); }
 .metodos { display: grid; gap: 10px; margin-top: 14px; }
@@ -187,7 +187,7 @@ figcaption i { color: var(--texto-suave); font-size: .72rem; }
 .toast { position: fixed; left: 50%; bottom: 96px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; z-index: 50;
   background: var(--fondo-2); border: 1px solid var(--oro); padding: 10px 16px; border-radius: 12px; transition: .3s; max-width: calc(100vw - 32px); text-align: center; }
 .toast.visible { opacity: 1; transform: translate(-50%, 0); }
-.pie { text-align: center; font-size: .75rem; color: var(--texto-suave); padding: 20px 16px 40px; }
+.pie { text-align: center; font-size: .75rem; color: var(--texto-suave); padding-block: 20px 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 
 @media (max-width: 560px) {
   :root { --carta-an: 44px; }
@@ -198,3 +198,13 @@ figcaption i { color: var(--texto-suave); font-size: .72rem; }
   .lectura { padding: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---------- pasarela simulada en la página ---------- */
+.demo-aviso { background: rgba(212,175,90,.15); color: var(--oro-claro); font-size: .8rem; padding: 6px 10px; border-radius: 8px; }
+.campos { display: grid; gap: 6px; text-align: left; margin: 12px 0 6px; }
+.campos label { font-size: .8rem; color: var(--texto-suave); }
+.campos input { width: 100%; padding: 11px; border-radius: 10px; border: 1px solid var(--borde); background: rgba(0,0,0,.25); color: var(--texto); font: 1rem Inter, sans-serif; }
+.campos .fila { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.campos .fila > div { display: grid; gap: 6px; min-width: 0; }
+#pasarela-pagar { width: 100%; margin-top: 8px; }
+.btn-bizum { background: #05c3dd; color: #032b33; }
